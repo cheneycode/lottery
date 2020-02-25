@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+		<title>抽奖</title>
+		<link rel="stylesheet" href="css/lottery.css" />
+	</head>
+	<body>
+		<div class="lottery-box" id="app">
+			<div class="lottery-container">
+				<h1 class="title"></h1> <!--抽奖-->
+				<div class="lottery">
+					<div class="lottery-item">
+						<div class="lottery-start">
+							<div class="box gray" v-if="isStart===0">
+								<p>活动未开始</p>
+							</div>
+							<div class="box" @click="submit" v-if="isStart===1">
+								<!-- 抽奖 -->
+								<!-- <p>消耗{{score}}积分</p> -->
+							</div>
+							<div class="box gray" v-if="isStart===2">
+								<p>活动已过期</p>
+							</div>
+						</div>
+						<ul>
+							<li v-for="(item,i) in list" :class="i==index?'on':''">
+								<div class="box">
+									<p><img :src="item.img" alt=""></p>
+									<p>{{item.title}}</p>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="rule-item">
+				<div class="rule-title">
+					<p>活动规则</p>
+				</div>
+				<div class="rule-text">
+					<p>活动时间： 2020年2月1日- 2月29日</p>
+					<p>参与资格：</p>
+					<p>一、凡是在活动期间激活的新客户，都可参与幸运大抽奖的活动；根据客户首次激活的资金不同，参与抽奖次数不同，具体如下：</p>
+					<p>有效激活 抽奖次数（10万/1次，50万/2次）</p>
+					<p>二、奖项设置：</p>
+					<p>一等奖 1名 CSmall Gift 银925欧泊立方氧化锆 炫彩绽放系列 （价值5167元）</p>
+					<p>二等奖 3名 CSmall Gift 吉祥精品时尚南红玛瑙手工DIY手串 （价值2879元）</p>
+					<p>三等奖 6名 CSmall Gift 灵动水滴系列 银925项链 （价值1989元）</p>
+					<p>四等奖 10名 CSmall Gift 灵动女款珍珠手链色泽亮丽长208mm精品饰品 （价值989元）</p>
+					<p>五等奖 20名 CSmall Gift 银925淡水珍珠项链-几何 （价值459元）</p>
+					<p>六等奖 10名 CSmall Gift 925银镶石耳吊 （价值299元）</p>
+					<p>三、兑奖时间：</p>
+					<p>1、活动期内共50次抽奖机会，每次抽奖100%中奖，根据客户激活的先后时间进行排序，根据客户首次激活的资金给予抽奖的次数；</p>
+					<p>2、2月1日-2月6日激活的客户2月7日抽奖，之后客户只要激活，次日方可参与抽奖；</p>
+					<p>3、有效激活为3月8日前该客户需要完成10手 15KG 的白银操作，若是无效单则不发放抽到的礼品；</p>
+					<p>四、特别声明</p>
+					<p>任何通过技术作弊手段恶意刷奖品的行为都将被视为违法抽奖规则而无效，包括不限于通过黑客程序，恶意虚假用户账号等方式，本次活动最终解释权归官方所有。</p>
+				</div>
+			</div>
+			
+			<!-- 中奖弹窗 -->
+			<div class="mask" v-if="showToast"></div>
+			<div class="lottery-alert" v-if="showToast">
+				<img class="close" src="img/close.png" @click="showToast=false">
+				<p>恭喜你中奖了</p>
+				<h2>获得{{list[index].title}}</h2>
+				<span>稍后工作人员会和您联系</span>
+				<div class="btnsave" @click="showToast=false">确定</div>
+			</div>
+			<div class="mask" v-if="showCode"></div>
+			<div class="lottery-alert" v-if="showCode">
+				<img class="close" src="img/close.png" @click="close" >
+				<h1>抽奖兑换</h1>
+				<input class="code-text" type="text" placeholder="请输入抽奖兑换码" maxlength="8" v-model="code" />
+				<div class="btnsave" @click="submit">确定</div>
+			</div>
+		</div>
+		<script src="js/vue.min.js"></script>
+		<script src="js/axios.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/lottery.js"></script>
+	</body>
+</html>
